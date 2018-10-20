@@ -112,6 +112,9 @@ body {
                 }
 
                 &-list {
+                    max-width: 280px;
+                    width: 100%;
+
                     display: flex;
                     flex-wrap: wrap;
                 }
@@ -173,6 +176,21 @@ body {
 
                         cursor: pointer;
                     }
+
+                    &-guest {
+                        background: inherit;
+
+                        border: 0;
+
+                        font-weight: bold;
+                        color: inherit;
+
+                        -webkit-appearance: none;
+
+                        &:hover, &:focus {
+                            outline: none;
+                        }
+                    }
                 }
 
                 &-list {
@@ -205,6 +223,18 @@ body {
 
                     &:not(.active):hover {
                         background-color: rgba($brand-color, .1);
+                    }
+
+                    &.active {
+                        background-color: rgba($brand-color, 1);
+                        color: #fff;
+                    }
+
+                    &.not-available {
+                        background-color: rgba($brand-color, 1);
+                        color: #fff;
+
+                        pointer-events: none;
                     }
                 }
             }
