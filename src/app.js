@@ -25,31 +25,6 @@ mainApp.controller('MainController', ['$scope', function ($scope) {
         1,2,3,4,5
     ]
 
-
-    let openSelect = function(selector){
-        var element = $(selector)[0], worked = false;
-        if (document.createEvent) { // all browsers
-            var e = document.createEvent("MouseEvents");
-            e.initMouseEvent("mousedown", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            worked = element.dispatchEvent(e);
-        } else if (element.fireEvent) { // ie
-            worked = element.fireEvent("onmousedown");
-        }
-        if (!worked) { // unknown browser / error
-            alert("It didn't worked in your browser.");
-        }
-    }
-
-    $scope.onClickGuests = () => {
-        let el = document.getElementById('reservation-body-content-times-select-guest')
-
-        // el.focus();
-        el.click();
-        // let event = document.createEvent('MouseEvents');
-        // event.initMouseEvent('mousedown', true, true, window);
-        // el.dispatchEvent(event);
-        // $scope.guests.focus().click()
-    }
     function daysInMonth(month,year) {
         let monthNum =  new Date(Date.parse(month +" 1,"+year)).getMonth()+1
         return new Date(year, monthNum, 0).getDate();
@@ -60,6 +35,14 @@ mainApp.controller('MainController', ['$scope', function ($scope) {
         ];
 
         return monthNames[id]
+    }
+
+    function setDaysInMonth() {
+        $scope.days = [];
+
+        for(let i = 1; i <= daysInMonth($scope.selectedMonth, $scope.selectedYear); i++) {
+            $scope.days.push(i)
+        }
     }
 
     function setSelectedDate(date = null) {
@@ -74,6 +57,25 @@ mainApp.controller('MainController', ['$scope', function ($scope) {
         $scope.selectedMonthString = getMonthString(now.getMonth())
         $scope.selectedYear = year
         $scope.date = `${year}-${month}-${day}`
+
+        setDaysInMonth()
+    }
+
+    $scope.toggleOpen = (selector) => {
+        let el = document.querySelector(selector);
+
+        if(el) {
+            el.classList.toggle('open')
+        }
+    }
+
+    $scope.checkedDate = () => {
+        let now = new Date()
+        let day = ('0' + now.getDate()).substr(-2)
+        let month = ('0' + (now.getMonth()+1)).substr(-2)
+        let year = now.getFullYear()
+
+        return (day === $scope.selectedDay && month === $scope.selectedMonth && year === $scope.selectedYear)?  'Today' : `${$scope.selectedDay} ${$scope.selectedMonthString}`
     }
 
     $scope.getMarginDayCalendar = (day) => {
@@ -103,12 +105,11 @@ mainApp.controller('MainController', ['$scope', function ($scope) {
 
         setSelectedDate(date);
     }
+
     this.$onInit = () => {
         setSelectedDate()
 
-        for(let i = 1; i <= daysInMonth($scope.selectedMonth, $scope.selectedYear); i++) {
-            $scope.days.push(i)
-        }
+        setDaysInMonth()
 
         $scope.onClickDay($scope.selectedDay)
     }
@@ -137,8 +138,9 @@ mainApp.controller('MainController', ['$scope', function ($scope) {
 
         axios.get(`https://hostme-services-qa.azurewebsites.net/api/core/mb/restaurants/4531/availability?date=${$scope.date}T12:00:00%2B03:00&partySize=2&rangeInMinutes=720`)
             .then(res => {
-                $scope.data = res.data
-                console.log('$scope.data', $scope.data)
+                $scope.$apply(function () {
+                   $scope.data = res.data
+                });
             })
     }
 }])

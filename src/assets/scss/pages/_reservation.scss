@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-$brand-color: #e16640;
 
 body {
     background-color: #f8f8f8;
@@ -18,6 +17,10 @@ body {
         width: 100%;
 
         margin: 100px auto;
+
+        @include adopt($mobile) {
+            margin: auto;
+        }
     }
 
     &-header {
@@ -30,8 +33,16 @@ body {
 
         background-image: linear-gradient(to bottom, rgba(61, 60, 59, 0.1), rgba(61, 60, 59, 0.5) 54%, rgba(61, 60, 59, 0.8));
 
+        @include adopt($mobile) {
+            padding: 20px;
+        }
+
         &-wrap {
             height: 200px;
+
+            @include adopt($mobile) {
+                height: 170px;
+            }
         }
 
         &-back {
@@ -41,6 +52,10 @@ body {
             margin-bottom: auto;
 
             cursor: pointer;
+
+            @include adopt($mobile) {
+                margin-top: auto;
+            }
         }
     }
 
@@ -48,6 +63,10 @@ body {
         font-size: 36px;
         color: #fff;
         letter-spacing: -0.2px;
+
+        @include adopt($mobile) {
+            font-size: 32px;
+        }
     }
 
     &-status {
@@ -56,6 +75,10 @@ body {
         color: #fff;
         line-height: 1.25;
         opacity: .8;
+
+        @include adopt($mobile) {
+            font-size: 14px;
+        }
     }
 
     &-body {
@@ -68,8 +91,53 @@ body {
 
             display: flex;
 
+            @include adopt($tablet) {
+                padding: 27px 30px;
+            }
+
+            @include adopt($mobile) {
+                padding: 0;
+
+                flex-direction: column;
+                align-items: center;
+            }
+
             &-calendar {
                 margin-right: 50px;
+
+                @include adopt($mobile) {
+                    width: 100%;
+                    height: 60px;
+
+                    margin-right: unset;
+
+                    overflow: hidden;
+
+                    border-bottom: 1px solid #eeeeee;
+
+                    &.open {
+                        height: auto;
+                    }
+                }
+
+                &-tab {
+                    height: 60px;
+
+                    padding-left: 20px;
+
+                    display: none;
+
+                    align-items: center;
+
+
+                    svg {
+                        margin-right: 11px;
+                    }
+
+                    @include adopt($mobile) {
+                        display: flex;
+                    }
+                }
 
                 &-header {
                     display: flex;
@@ -77,6 +145,10 @@ body {
                     justify-content: center;
 
                     margin-bottom: 30px;
+
+                    @include adopt($mobile) {
+                        margin-top:20px;
+                    }
 
                     &-date {
                         margin: 0 40px;
@@ -95,6 +167,13 @@ body {
 
                 &-body {
 
+                    @include adopt($mobile) {
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        align-items: center;
+                    }
                 }
 
                 &-dow {
@@ -159,6 +238,10 @@ body {
                     font-weight: 300;
                     letter-spacing: 0.2px;
                     color: #999999;
+
+                    @include adopt($mobile) {
+                        padding-left: 20px;
+                    }
                 }
 
                 &-select {
@@ -166,6 +249,14 @@ body {
                     align-items: center;
 
                     margin-bottom: 30px;
+
+                    @include adopt($mobile) {
+                        height: 60px;
+
+                        padding-left: 20px;
+
+                        border-bottom: 1px solid #eeeeee;
+                    }
 
                     .people {
                         margin-right: 11px;
@@ -185,10 +276,31 @@ body {
                         font-weight: bold;
                         color: inherit;
 
+                        position: relative;
+
                         -webkit-appearance: none;
 
                         &:hover, &:focus {
                             outline: none;
+                        }
+
+                        &::after {
+                            content: '
+                             <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" ng-click="clickNextMonth()">
+                            <g fill="none" fill-rule="evenodd">
+                                <path d="M0 0h12v12H0z"/>
+                                <path fill="#AAA" d="M9.793 4L6 7.792 2.207 4l-.707.707 4.147 4.146a.495.495 0 0 0 .707 0L10.5 4.707 9.793 4z"/>
+                            </g>
+                        </svg>';
+
+                            width: 12px;
+                            height: 12px;
+
+                            position: absolute;
+                            top:50%;
+                            right:0;
+
+                            background: transparent url('/images/icons/arrow-down.svg') no-repeat center/contain;
                         }
                     }
                 }
@@ -198,6 +310,10 @@ body {
                     flex-wrap: wrap;
 
                     margin: 0 -5px;
+
+                    @include adopt($mobile) {
+                        padding: 20px;
+                    }
                 }
 
                 &-item {
@@ -248,6 +364,11 @@ body {
 
         background-color: #ffffff;
 
+
+        @include adopt($mobile) {
+            padding:0;
+        }
+
         &-btn {
             width: 320px;
             height: 60px;
@@ -269,6 +390,14 @@ body {
 
             &:not(.disabled):hover {
                 opacity: .9;
+            }
+
+            @include adopt($mobile) {
+                width: 100%;
+
+                margin-bottom: 35px;
+
+                border-radius: 0px;
             }
         }
     }
