@@ -12,15 +12,17 @@ body {
 }
 
 .reservation {
+    width:100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
     &-wrap {
         max-width: 1000px;
         width: 100%;
 
-        margin: 100px auto;
-
-        @include adopt($mobile) {
-            margin: auto;
-        }
+        margin: auto;
     }
 
     &-header {
@@ -39,6 +41,8 @@ body {
 
         &-wrap {
             height: 200px;
+
+            background: transparent url('../images/header-bg.jpg') no-repeat center/cover;
 
             @include adopt($mobile) {
                 height: 170px;
@@ -78,6 +82,8 @@ body {
 
         @include adopt($mobile) {
             font-size: 14px;
+            margin-bottom: 0;
+            margin-top: 7px;
         }
     }
 
@@ -96,6 +102,8 @@ body {
             }
 
             @include adopt($mobile) {
+                min-height: calc(100vh - 230px);
+
                 padding: 0;
 
                 flex-direction: column;
@@ -116,7 +124,11 @@ body {
                     border-bottom: 1px solid #eeeeee;
 
                     &.open {
-                        height: auto;
+                        height: unset;
+
+                        .arrow-down {
+                            transform: rotate(180deg);
+                        }
                     }
                 }
 
@@ -130,8 +142,13 @@ body {
                     align-items: center;
 
 
-                    svg {
+                    .calendar {
                         margin-right: 11px;
+                    }
+
+                    .arrow-down {
+                        margin-left: auto;
+                        margin-right: 20px;
                     }
 
                     @include adopt($mobile) {
@@ -232,26 +249,42 @@ body {
 
             &-times {
 
+                @include adopt($mobile) {
+                    width:100%;
+
+                    padding: 0 20px 20px;
+                }
+
                 &-dinner {
                     height: 20px;
+
                     font-size: 14px;
                     font-weight: 300;
                     letter-spacing: 0.2px;
                     color: #999999;
 
                     @include adopt($mobile) {
-                        padding-left: 20px;
+                        margin-bottom:2px;
                     }
                 }
 
                 &-select {
-                    display: flex;
+                    display: inline-flex;
                     align-items: center;
 
                     margin-bottom: 30px;
 
+                    position: relative;
+
+                    cursor: pointer;
+
                     @include adopt($mobile) {
+                        display: flex;
+
+                        width: calc(100% + 40px);
                         height: 60px;
+
+                        margin-left: -20px;
 
                         padding-left: 20px;
 
@@ -265,10 +298,15 @@ body {
                     .arrow-down {
                         margin-left: 8px;
 
-                        cursor: pointer;
+                        @include adopt($mobile) {
+                            margin-left: auto;
+                            margin-right: 20px;
+                        }
                     }
 
                     &-guest {
+                        width:100%;
+
                         background: inherit;
 
                         border: 0;
@@ -276,7 +314,9 @@ body {
                         font-weight: bold;
                         color: inherit;
 
-                        position: relative;
+                        position: absolute;
+
+                        opacity: 0;
 
                         -webkit-appearance: none;
 
@@ -284,23 +324,11 @@ body {
                             outline: none;
                         }
 
-                        &::after {
-                            content: '
-                             <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" ng-click="clickNextMonth()">
-                            <g fill="none" fill-rule="evenodd">
-                                <path d="M0 0h12v12H0z"/>
-                                <path fill="#AAA" d="M9.793 4L6 7.792 2.207 4l-.707.707 4.147 4.146a.495.495 0 0 0 .707 0L10.5 4.707 9.793 4z"/>
-                            </g>
-                        </svg>';
+                        @include adopt($mobile) {
+                            width:100%;
+                            height: 60px;
 
-                            width: 12px;
-                            height: 12px;
-
-                            position: absolute;
-                            top:50%;
-                            right:0;
-
-                            background: transparent url('/images/icons/arrow-down.svg') no-repeat center/contain;
+                            margin-left: -20px;
                         }
                     }
                 }
@@ -310,17 +338,13 @@ body {
                     flex-wrap: wrap;
 
                     margin: 0 -5px;
-
-                    @include adopt($mobile) {
-                        padding: 20px;
-                    }
                 }
 
                 &-item {
                     width: 80px;
                     height: 40px;
 
-                    margin: 10px 5px;
+                    margin: 5px 2.5px;
 
                     display: flex;
                     align-items: center;
@@ -395,7 +419,7 @@ body {
             @include adopt($mobile) {
                 width: 100%;
 
-                margin-bottom: 35px;
+                //margin-bottom: 35px;
 
                 border-radius: 0px;
             }

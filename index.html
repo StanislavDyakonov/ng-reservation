@@ -32,7 +32,7 @@
             <div class="reservation-body-content">
                 <div class="reservation-body-content-calendar" ng-ref="calendar">
                     <div class="reservation-body-content-calendar-tab" ng-click="toggleOpen('.reservation-body-content-calendar')">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <svg class="calendar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <g fill="none" fill-rule="evenodd">
                                 <path d="M0 0h24v24H0z"/>
                                 <path fill="#666" d="M20.996 9.009H3.006V5c0-.477.473-1 .997-1h2.999v3h.997V4H16v3h1.002V4h3c.497 0 .994.482.994 1v4.009zM20.998 19c0 .522-.505 1.007-.996 1.007h-16c-.503 0-.995-.455-.995-1.007v-8.998h17.99V19zM2 19.002C2 20.106 2.895 21 3.997 21h16.007A1.998 1.998 0 0 0 22 19.002V5c0-1.108-.872-2-1.996-2l-3 .008V1h-1.003v2H8.005V1L7 1.002V3H3.997C2.882 3 2 3.9 2 5v14.002z"/>
@@ -40,6 +40,13 @@
                         </svg>
 
                         {{checkedDate()}}
+
+                        <svg class="arrow-down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+                            <g fill="none" fill-rule="evenodd">
+                                <path d="M0 0h12v12H0z"/>
+                                <path fill="#AAA" d="M9.793 4L6 7.792 2.207 4l-.707.707 4.147 4.146a.495.495 0 0 0 .707 0L10.5 4.707 9.793 4z"/>
+                            </g>
+                        </svg>
                     </div>
                     <div class="reservation-body-content-calendar-header">
                         <svg class="arrow-left" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" ng-click="clickPrevMonth()">
@@ -104,27 +111,28 @@
                                 <path fill="#666" fill-rule="nonzero" d="M6 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 1a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
                             </g>
                         </svg>
-                        Table for&nbsp;
+                        Table for&nbsp;<strong>{{guest == 1 ? guest + ' guest' : guest + ' guests' }}</strong>
 
+                        <svg class="arrow-down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+                            <g fill="none" fill-rule="evenodd">
+                                <path d="M0 0h12v12H0z"/>
+                                <path fill="#AAA" d="M9.793 4L6 7.792 2.207 4l-.707.707 4.147 4.146a.495.495 0 0 0 .707 0L10.5 4.707 9.793 4z"/>
+                            </g>
+                        </svg>
                         <select id="reservation-body-content-times-select-guest" ng-model="guest" class="reservation-body-content-times-select-guest">
                             <option ng-value="g" value="g" ng-repeat="g in guestSelect">
                                 {{g == 1 ? g + ' guest' : g + ' guests' }}
                             </option>
-                            <svg class="arrow-down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
-                                <g fill="none" fill-rule="evenodd">
-                                    <path d="M0 0h12v12H0z"/>
-                                    <path fill="#AAA" d="M9.793 4L6 7.792 2.207 4l-.707.707 4.147 4.146a.495.495 0 0 0 .707 0L10.5 4.707 9.793 4z"/>
-                                </g>
-                            </svg>
                         </select>
                     </div>
 
-                    <div class="reservation-body-content-times-dinner">
+                    <div class="reservation-body-content-times-dinner" ng-show="data.length > 0">
                         DINNER
                     </div>
 
-
                     <div class="reservation-body-content-times-list">
+                        <span ng-show="data.length == 0">No Times</span>
+
                         <div class="reservation-body-content-times-item" ng-repeat="time in data" ng-click="setTime(getValidTime(time))" ng-class="[{active: getValidTime(time) == selectedTime}, {'not-available': !time.open}]">
                             {{ getValidTime(time) }}
                         </div>
